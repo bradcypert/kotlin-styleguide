@@ -200,19 +200,19 @@ object UserRepository {} // good
 Good:
 ```kotlin
 interface IDataFacade {}
-class HttpApi: IDataFacade {}
+class HttpApi(): IDataFacade {}
 ```
 
 Good:
 ```kotlin
 interface IDataFacade {}
-class DataFacade: IDataFacade{}
+class DataFacade(): IDataFacade{}
 ```
 
 Bad:
 ```kotlin
 interface DataFacade {} // needs an "I"
-class HttpApi: DataFacade {}
+class HttpApi(): DataFacade {}
 ```
 
 Direct implementations of the interface should not begin with an `I` and not end with an `Impl`.
@@ -220,7 +220,7 @@ Bad:
 
 ```kotlin
 interface IDataFacade {} // this isnt bad
-class DataFacadeImpl: IDataFacade {} // this is
+class DataFacadeImpl(): IDataFacade {} // this is
 ```
 
 ----------
