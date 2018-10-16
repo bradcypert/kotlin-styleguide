@@ -78,7 +78,7 @@ class User() {} // good
 class Foo() {} // bad
 ```
 
-It is common to use suffix a class with a design pattern. If this helps create readability, it is recommended. Attempt to stick with existing (or team agreed upon) design patterns.
+It is common to suffix a class with a design pattern. If this helps create readability, it is recommended. Attempt to stick with existing (or team agreed upon) design patterns.
 
 ```kotlin
 class UserRepository() {} // good
@@ -197,26 +197,28 @@ object UserRepository {} // good
 ----------
 
 1. Interface names should begin with an `I`. For example `IDataFacade`.
-Good:
+
+**Good:**
 ```kotlin
 interface IDataFacade {}
 class HttpApi(): IDataFacade {}
 ```
 
-Good:
+**Good:**
 ```kotlin
 interface IDataFacade {}
 class DataFacade(): IDataFacade{}
 ```
 
-Bad:
+**Bad:**
 ```kotlin
 interface DataFacade {} // needs an "I"
 class HttpApi(): DataFacade {}
 ```
 
 Direct implementations of the interface should not begin with an `I` and not end with an `Impl`.
-Bad:
+
+**Bad:**
 
 ```kotlin
 interface IDataFacade {} // this isnt bad
