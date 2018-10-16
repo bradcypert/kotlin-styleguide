@@ -84,6 +84,10 @@ It is common to suffix a class with a design pattern. If this helps create reada
 class UserRepository() {} // good
 ```
 
+Classes are final in Kotlin and for a good reason. Only open a class if it is intended to be extended.
+
+
+
 ### 3.1 Enum Classes
 
 Enums should be named according to the value they represent. If we needed an enum to determine if the user's calendar format was days, weeks, months, or years we would build one like so:
@@ -139,6 +143,82 @@ class User(val name: String, val password: String) {} // bad
 ```
 
 ### 3.4 Constructors
+Omit the constructor keyword unless you need to provide an annotation or visibility modifier to the constructor.
+
+**Good:**
+
+```kotlin
+class User(val name: String) {} // no keyword
+class UserInfo @Inject constructor(val dob: Date) {} // annotated
+class UserPhoto private constructor(val url: String) {} // private
+```
+
+**Bad:**
+
+```kotlin
+class User constructor(val name: String) {} // unnecessary
+```
+
+Use an init block for any logic that needs to take place upon construction.
+
+**Good:**
+
+```kotlin
+class User(val name: String) {
+  private val upperName: String
+  init {
+      upperName = name.toUpperCase()
+  }
+}
+```
+
+Use only **ONE** init block to help reduce complexity.
+
+**Good:**
+
+```kotlin
+class User(val name: String) {
+  private val upperName: String
+  private val lowerName: String
+  init {
+      upperName = name.toUpperCase()
+      lowerName = name.toLowerCase()
+  }
+}
+```
+
+**Bad:**
+
+```kotlin
+class User(val name: String) {
+  private val upperName: String
+  init {
+    upperName = name.toUpperCase()
+  }
+  private val lowerName: String
+  init {
+    lowerName = name.toLowerCase()
+  }
+}
+```
+
+Consider using a primary constructor with nullable parameters instead of a secondary constructor.
+
+**Good:**
+
+```kotlin
+class User(val first: String, val last: String = "Johnson") {}
+
+User(first = "Ted")
+```
+
+**Bad:**
+
+```kotlin
+class User(val first: String, val last: String) {
+  constructor(first: String): this(first, "Johnson") {}
+}
+```
 
 ### 3.5 Class Properties
 
@@ -164,7 +244,10 @@ val loginChanges: LiveData<Boolean> get() = _loginChanges
 ```
 
 ### 3.6 Visibility Modifiers
-
+* Avoid use of the `public` modifier.
+* Default to `private`.
+* Consider using `protected` when it needs to be visibile in subclasses, too.
+* Avoid use of `internal` unless necessary.
 
 ----------
 ## 4. Objects
