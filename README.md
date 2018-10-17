@@ -16,6 +16,7 @@ Opinions on a flexible language.
 6. Functions
    1. Class Functions
    2. Extension Functions
+   3. Anonymous Functions
 
 ___________
 ## 1. Files
@@ -220,6 +221,15 @@ class User(val first: String, val last: String) {
 }
 ```
 
+Call constructors using named parameters if the constructor accepts 2 or more parameters.
+
+```kotlin
+UserEmail("Brad.Cypert@thatReallyPopularEmailService.com") // good
+User(first = "Brad", last = "Cypert", age = 25) // good
+Car("Volkswagen", "GTI", 2018, 4, 4) // bad
+```
+
+
 ### 3.5 Class Properties
 
 If a public property must be backed by a private property, prefix `_` to the public property name to create the private property name. Example:
@@ -311,3 +321,128 @@ class DataFacadeImpl(): IDataFacade {} // this is
 ----------
 ## 6. Functions
 ----------
+
+Functions are intended to achieve something and should be named as with, preferably starting with a verb.
+
+```kotlin
+fun user() { ... } // bad
+fun getUser() { ... } // good
+```
+
+A function that returns a boolean can start with `get` or, more preferably, `is` (or similar). Using `is` to pose a simple yes/no question clearly indicates that a boolean is expected.
+
+```kotlin
+fun getIsActive(): Boolean { ... } // okay
+fun isActive(): Boolean { ... } // good
+fun hasEmail(): Boolean { ... } // good
+fun email(): Boolean { ... } // bad
+```
+
+### 6.1 Class Functions
+
+Prefer using public properties instead of functions that begin with `get`.
+```kotlin
+var user = User() // good
+fun getUser() { ... } // bad
+```
+
+Override getters and/or setters instead of providing a custom get/set function.
+
+**Good:**
+```kotlin
+var name = ""
+  get() = field.toUpperCase()
+  set(v: String) { field = v.toLowerCase()}
+```
+
+**Bad:**
+
+```kotlin
+private var _name = ""
+
+fun getName(): String = _name.toUpperCase()
+fun setName(v: String) { _name = v.toLowerCase }
+```
+
+When simply modifing the visibility of the accessor method, do not provide a method body.
+
+**Good:**
+```kotlin
+var name: String = "Brad"
+  private set
+```
+
+**Bad:**
+```kotlin
+var name: String = "Brad"
+  private set(n: String) { field = n }
+```
+
+### 6.2 Extension Functions
+
+### 6.3 Anonymous Functions
+
+Prefer lambda expressions over anonymous functions.
+
+```kotlin
+listOf<Int>(1,2,3).find { it % 2 == 0 } // good
+listOf<Int>(1,2,3).find(fun (i: Int): Boolean { return i % 2 == 0 }) // bad
+```
+
+Use clear parameter names when writing lamdba expressions if the intentions of the lambda is not obvious.
+
+```kotlin
+listOf<Int>(1,2,3).map { value -> value +1 } // good
+listOf<Int>(1,2,3).map { x -> x+1 } // okay, obvious lambda body
+listOf<Int>(1,2,3).map { it + 1 } // okay, obvious lambda body
+listOf<Int>(1,2,3).map { user -> user + 1 } // bad, unclear function body
+listOf<Int>(1,2,3).map {
+  val isDivisibleByTwo = it % 2 == 0
+  if (isDivisibleByTwo) {
+    arbitratyMap[it]
+  } else {
+    0
+  }
+} // bad, not clear function body or implications if `it` parameter
+```
+
+When defining lambdas that are nested, provide a name for each parameter to the lambda so as to avoid unclear nesting of `it`s.
+
+```kotlin
+val l = listOf(
+  listOf(1,2,3),
+  listOf(4,5,6),
+  listOf(7,8,9)
+)
+
+l.map { sublist ->
+  sublist.map { nestedValue -> nestedValue * 2 }
+} // good
+
+l.map {
+  it.map { it * 2 }
+} // bad
+```
+
+If the lambda body is not simple (IE: if it has any nested lambdas), insert a line break between the parameter declaration and the lambda body.
+
+```kotlin
+l.map { sublist ->
+  sublist.map { nestedValue -> nestedValue * 2 }
+} // good
+
+l.map { sublist ->
+  sublist.map { nestedValue ->
+    nestedValue * 2
+  }
+} // good
+
+l.map { sublist -> sublist.map { nestedValue -> nestedValue * 2 } } // bad
+```
+
+When defining anonymous functions as parameters, indicate the the param is a function in the name. This helps readability when calling the function with multiple function parameters.
+
+```kotlin
+fun<T> find(l: List<T>, searchFn: (T) => Boolean, defaultFn: () => T) // good
+fun<T> find(l: List<T>, search: (T) => Boolean, default: () => T) // bad
+```
