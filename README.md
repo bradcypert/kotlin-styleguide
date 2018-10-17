@@ -378,6 +378,15 @@ var name: String = "Brad"
   private set(n: String) { field = n }
 ```
 
+Always use a function expression when a function would otherwise only contain one expression.
+
+```kotlin
+fun isActive(user: User) = user.isActive && user.isNotBanned // good
+fun isActive(user: User): Boolean {
+  return user.isActive && user.isNotBanned
+} // bad
+```
+
 ### <a name="extension-functions"></a>6.2 Extension Functions
 Yes
 
