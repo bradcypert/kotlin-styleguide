@@ -379,6 +379,7 @@ var name: String = "Brad"
 ```
 
 ### 6.2 Extension Functions
+Yes
 
 ### 6.3 Anonymous Functions
 
