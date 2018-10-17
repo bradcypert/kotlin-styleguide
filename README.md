@@ -2,24 +2,24 @@
 Opinions on a flexible language.
 
 ## Table of Contents
-1. Files
-2. Variables
-3. Classes
-   1. Enums
-   2. Sealed Classes
-   3. Data Classes
-   4. Constructors
-   5. Class Properties
-   6. Visibility Modifiers
-4. Objects
-5. Interfaces
-6. Functions
-   1. Class Functions
-   2. Extension Functions
-   3. Anonymous Functions
+1. [Files](#files)
+2. [Variables](#variables)
+3. [Classes](#classes)
+   1. [Enums](#enums)
+   2. [Sealed Classes](#sealed-classes)
+   3. [Data Classes](#data-classes)
+   4. [Constructors](#constructors)
+   5. [Class Properties](#class-properties)
+   6. [Visibility Modifiers](#visibility-modifiers)
+4. [Objects](#objects)
+5. [Interfaces](#interfaces)
+6. [Functions](#functions)
+   1. [Class Functions](#class-functions)
+   2. [Extension Functions](#extension-functions)
+   3. [Anonymous Functions](#anonymous-functions)
 
 ___________
-## 1. Files
+## <a name="files"></a>1. Files
 ___________
 Files should be named according to their majority content. For example:
 
@@ -47,7 +47,7 @@ could be named `ListExtensions.kt`
 
 ----------
 
-## 2. Variables
+## <a name="variables"></a>2. Variables
 
 ----------
 Variables should be named in regards to their data or state that they hold. Prefer lengthy (but descriptive) variable names over short (but confusing) variables.
@@ -67,7 +67,7 @@ var active = true // bad
 
 ----------
 
-## 3. Classes
+## <a name="classes"></a>3. Classes
 
 ----------
 There are no special prefixes or suffixes to differentiate between classes and other major types. For example, this guide recommends using `I` as a prefix to interfaces, classes have no such expectation.
@@ -89,7 +89,7 @@ Classes are final in Kotlin and for a good reason. Only open a class if it is in
 
 
 
-### 3.1 Enum Classes
+### <a name="enum-classes"></a>3.1 Enum Classes
 
 Enums should be named according to the value they represent. If we needed an enum to determine if the user's calendar format was days, weeks, months, or years we would build one like so:
 
@@ -110,7 +110,7 @@ enum class CalendarFormat {
 }
 ```
 
-### 3.2 Sealed Classes
+### <a name="sealed-classes"></a>3.2 Sealed Classes
 
 Prefer Sealed classes over enums when working with categorical values, especially if **some** of the enumerations require additional data.
 
@@ -134,7 +134,7 @@ enum class CalendarFormat(val isLeapYear: Boolean) {
 }
 ```
 
-### 3.3 Data Classes
+### <a name="data-classes"></a>3.3 Data Classes
 
 Use data class when creating simple data structures. Prefer to keep data classes simple and without business logic.
 
@@ -143,7 +143,7 @@ data class User(val name: String, val password: String) // good
 class User(val name: String, val password: String) {} // bad
 ```
 
-### 3.4 Constructors
+### <a name="constructors"></a>3.4 Constructors
 Omit the constructor keyword unless you need to provide an annotation or visibility modifier to the constructor.
 
 **Good:**
@@ -230,7 +230,7 @@ Car("Volkswagen", "GTI", 2018, 4, 4) // bad
 ```
 
 
-### 3.5 Class Properties
+### <a name="class-properties"></a>3.5 Class Properties
 
 If a public property must be backed by a private property, prefix `_` to the public property name to create the private property name. Example:
 
@@ -253,14 +253,14 @@ private val _loginChanges: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 val loginChanges: LiveData<Boolean> get() = _loginChanges
 ```
 
-### 3.6 Visibility Modifiers
+### <a name="visibility-modifiers"></a>3.6 Visibility Modifiers
 * Avoid use of the `public` modifier.
 * Default to `private`.
 * Consider using `protected` when it needs to be visibile in subclasses, too.
 * Avoid use of `internal` unless necessary.
 
 ----------
-## 4. Objects
+## <a name="objects"></a>4. Objects
 ---------
 Objects should be named similarly to classes (see below). The are no special prefixes or suffixes to differentiate between objects and classes. Do not include `Singleton`,  `Object`, or `Instance` in the object name.
 
@@ -286,7 +286,7 @@ object UserRepository {} // good
 ```
 
 ----------
-## 5. Interfaces
+## <a name="interfaces"></a>5. Interfaces
 ----------
 
 1. Interface names should begin with an `I`. For example `IDataFacade`.
@@ -319,7 +319,7 @@ class DataFacadeImpl(): IDataFacade {} // this is
 ```
 
 ----------
-## 6. Functions
+## <a name="functions"></a>6. Functions
 ----------
 
 Functions are intended to achieve something and should be named as with, preferably starting with a verb.
@@ -338,7 +338,7 @@ fun hasEmail(): Boolean { ... } // good
 fun email(): Boolean { ... } // bad
 ```
 
-### 6.1 Class Functions
+### <a name="class-functions"></a>6.1 Class Functions
 
 Prefer using public properties instead of functions that begin with `get`.
 ```kotlin
@@ -378,10 +378,10 @@ var name: String = "Brad"
   private set(n: String) { field = n }
 ```
 
-### 6.2 Extension Functions
+### <a name="extension-functions"></a>6.2 Extension Functions
 Yes
 
-### 6.3 Anonymous Functions
+### <a name="anonymous-functions"></a>6.3 Anonymous Functions
 
 Prefer lambda expressions over anonymous functions.
 
