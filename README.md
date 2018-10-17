@@ -392,8 +392,8 @@ listOf<Int>(1,2,3).find(fun (i: Int): Boolean { return i % 2 == 0 }) // bad
 Use clear parameter names when writing lamdba expressions if the intentions of the lambda is not obvious.
 
 ```kotlin
-listOf<Int>(1,2,3).map { value -> value +1 } // good
-listOf<Int>(1,2,3).map { x -> x+1 } // okay, obvious lambda body
+listOf<Int>(1,2,3).map { value -> value + 1 } // good
+listOf<Int>(1,2,3).map { x -> x + 1 } // okay, obvious lambda body
 listOf<Int>(1,2,3).map { it + 1 } // okay, obvious lambda body
 listOf<Int>(1,2,3).map { user -> user + 1 } // bad, unclear function body
 listOf<Int>(1,2,3).map {
