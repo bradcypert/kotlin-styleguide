@@ -338,13 +338,18 @@ fun hasEmail(): Boolean { ... } // good
 fun email(): Boolean { ... } // bad
 ```
 
-Always use a function expression when a function would otherwise only contain one expression.
+Always use a function expression when a function would otherwise only contain one expression unless that expression would span multiple lines
 
 ```kotlin
 fun isActive(user: User) = user.isActive && user.isNotBanned // good
 fun isActive(user: User): Boolean {
   return user.isActive && user.isNotBanned
 } // bad
+
+fun isActive(user: User) = user.isActive &&
+  user.isNotBanned &&
+  user.isPaid &&
+  user.isNotLegacy // bad
 ```
 
 ### <a name="class-functions"></a>6.1 Class Functions
