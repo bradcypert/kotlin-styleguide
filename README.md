@@ -203,7 +203,7 @@ class User(val name: String) {
 }
 ```
 
-Consider using a primary constructor with nullable parameters instead of a secondary constructor.
+Consider using a primary constructor with default parameters instead of a secondary constructor.
 
 **Good:**
 
